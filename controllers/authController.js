@@ -145,7 +145,13 @@ res.status(200).json({
     
 }
 
+};
+
+
+// test Controller
+const testController = async(req,res,next)=>{
+    res.send("protected route");
+
 }
 
-
-export {registerController,loginController}
+export {registerController,loginController,testController}

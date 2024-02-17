@@ -31,6 +31,9 @@ app.use(morgan('dev'));
 
 app.use("/api/v1/user",authRoute);
 
+
+
+
 // rest api 
 
 app.get('/', (req,res)=>{
