@@ -1,6 +1,8 @@
 import express from 'express'
-import colors from 'colors'
+// import colors from 'colors'
 import dotenv from 'dotenv'
+
+import authRoute from './routes/authRoute.js'
 
 
 // configure env 
@@ -23,6 +25,11 @@ const app = express();
 // middlewares 
 app.use(express.json());
 app.use(morgan('dev'));
+
+
+//routes
+
+app.use("/api/v1/user",authRoute);
 
 // rest api 
 
