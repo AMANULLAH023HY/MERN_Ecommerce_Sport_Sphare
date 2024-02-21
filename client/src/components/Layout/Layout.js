@@ -5,7 +5,7 @@ function Layout(props){
  return(
     <>
     <Header/>
-    <main style={{minHeight:"79vh"}}>
+    <main style={{height:"75vh", width:"100%"}}>
 
         {props.children}
     </main>

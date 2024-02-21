@@ -6,6 +6,7 @@
 }
 
 
+
 /* navbar css  */
 
 .navbar{
@@ -39,6 +40,7 @@
 /* =========================Footet ======================= */
 
 .footer{
+  margin-bottom: 20px;
   color: white;
   background: black;
   background: --webkit-linear-gradient(to roght, #434343, #000000);
@@ -84,4 +86,15 @@
   margin-top: 10px;
   padding: 10px;
 }
+
+
+
+/* ========================= Contact US  ======================= */
+.contactus{
+  display: flex;
+  min-height: 60vh;
+  justify-content: center;
+  align-items: center;
+}
+
 
