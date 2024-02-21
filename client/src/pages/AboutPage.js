@@ -4,7 +4,7 @@ import ContactUs from '../images/about2.jpg'
 export default function AboutPage(){
     return (
 
-        <Layout>
+        <Layout title={'About Us -Sport spahe'}>
             
         <div className="row contactus">
             <div className="col-md-6">

@@ -4,7 +4,7 @@ import Privacy from '../images/policy.png'
 
 const Policy = ()=>{
     return(
-        <Layout>
+        <Layout title={'Privacy Policy'}>
            <div className="row contactus">
             <div className="col-md-6">
                 <img 
