@@ -32,5 +32,56 @@
 }
 
 .active{
-  border-bottom: 1px solid black;
+  border-bottom: 2px solid black;
 }
+
+
+/* =========================Footet ======================= */
+
+.footer{
+  color: white;
+  background: black;
+  background: --webkit-linear-gradient(to roght, #434343, #000000);
+
+}
+
+.footer a{
+  text-decoration: none;
+  color: white;
+  padding: 10px;
+}
+
+.footer a:hover{
+  color: gray;
+  border-bottom: 2px solid gray;
+}
+
+
+
+/* =========================Page not found ======================= */
+
+.pnf{
+  display: flex;
+  min-height: 65vh;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.pnf-title{
+  font-size: 100px;
+  font-weight: 700;
+
+}
+
+.pnf-btn{
+  color: black;
+  background-color: #3c3d4a;
+  font-weight: bold;
+  border-radius: 5px;
+  border: 1px solid black;
+  margin-top: 10px;
+  padding: 10px;
+}
+
