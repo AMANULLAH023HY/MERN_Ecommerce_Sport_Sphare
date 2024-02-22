@@ -14,31 +14,31 @@ const registerController = async(req,res,next)=>{
 // Validation
         if(!name){
             return res.status(400).json({
-                error:"Name is required"
+                message:"Name is required"
             })
         }
 
         if(!email){
             return res.status(400).json({
-                error:"Email is required"
+                message:"Email is required"
             })
         }
 
         if(!password){
             return res.status(400).json({
-                error:"Password is required"
+                message:"Password is required"
             })
         }
 
         if(!phone){
             return res.status(400).json({
-                error:"Phone no is required"
+                message:"Phone no is required"
             })
         }
 
         if(!address){
             return res.status(400).json({
-                error:"Address is required"
+                message:"Address is required"
             })
         }
 
@@ -51,7 +51,7 @@ const registerController = async(req,res,next)=>{
 
         if(existingUser){
             return res.status(200).json({
-                success:true,
+                success:false,
                 message:"Already register, please login",
             })
         }

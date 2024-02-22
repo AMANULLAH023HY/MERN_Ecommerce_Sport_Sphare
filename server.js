@@ -1,6 +1,7 @@
 import express from 'express'
 // import colors from 'colors'
 import dotenv from 'dotenv'
+import cors from 'cors'
 
 import authRoute from './routes/authRoute.js'
 
@@ -23,6 +24,7 @@ connectDB();
 const app = express();
 
 // middlewares 
+app.use(cors());
 app.use(express.json());
 app.use(morgan('dev'));
 
