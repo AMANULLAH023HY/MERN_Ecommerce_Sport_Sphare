@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from 'axios'
-import { toast } from "react-toastify";
+import toast from 'react-hot-toast';
 import { useNavigate } from "react-router-dom";
 
 import Layout from "../../components/Layout/Layout";
@@ -29,7 +29,7 @@ const Register = () => {
       });
 
       if (res.data.success) {
-        toast.success(res.data.message);
+        toast.success("Register successfully!");
         navigate("/login");
       } else {
         toast.error(res.data.message);
@@ -104,7 +104,7 @@ const Register = () => {
             </div>
 
             <button type="submit" className="btn btn-primary">
-              Submit
+              Register
             </button>
           </form>
         </div>
