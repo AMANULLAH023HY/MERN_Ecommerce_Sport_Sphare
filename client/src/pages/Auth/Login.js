@@ -46,8 +46,8 @@ const Login = () => {
     <>
       <Layout title={"Login - Sport Sphere App"}>
         <div className="register">
-          <h1>Login Form</h1>
           <form onSubmit={handleSubmit}>
+          <h1>Login Form</h1>
             <div className="mb-3">
               <input
                 type="email"
@@ -74,6 +74,17 @@ const Login = () => {
             <button type="submit" className="btn btn-primary">
               Login
             </button>
+            <div className="mb-3 mt-3">
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={() => {
+                  navigate("/forgot-password");
+                }}
+              >
+                Forgot Password
+              </button>
+            </div>
           </form>
         </div>
       </Layout>

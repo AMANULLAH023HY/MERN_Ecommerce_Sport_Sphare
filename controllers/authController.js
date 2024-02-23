@@ -5,7 +5,7 @@ import JWT from "jsonwebtoken";
 
 const registerController = async (req, res, next) => {
   try {
-    const { name, email, password, phone, address } = req.body;
+    const { name, email, password, phone, address, answer } = req.body;
     // Validation
     if (!name) {
       return res.status(400).json({
@@ -37,6 +37,12 @@ const registerController = async (req, res, next) => {
       });
     }
 
+    if (!answer) {
+      return res.status(400).json({
+        message: "Answer is required",
+      });
+    }
+
     // check user
 
     const existingUser = await userModel.findOne({ email });
@@ -61,6 +67,7 @@ const registerController = async (req, res, next) => {
       phone,
       address,
       password: hashedPassword,
+      answer,
     });
 
     await user.save();
@@ -130,9 +137,66 @@ const loginController = async (req, res, next) => {
   }
 };
 
+// Forgot Password Controller
+
+const forgotPasswordController = async(req,res) =>{
+try {
+
+  const {email,answer, newPassword} = req.body;
+
+  if(!email){
+    res.status(400).send({
+      success:"false",
+      message:"Email is required"
+    })
+  };
+
+  if(!answer){
+    res.status(400).send({
+      success:"false",
+      message:"Answer is required"
+    })
+  };
+
+  if(!newPassword){
+    res.status(400).send({
+      success:"false",
+      message:"New Password is required"
+    })
+  };
+
+
+  const user = await userModel.findOne({email,answer})
+  if(!user){
+    res.status(400).send({
+      success:"false",
+      message:"Wrong Email or Answer"
+    })
+  };
+
+
+  const hashed = await hashPassword(newPassword);
+  await userModel.findByIdAndUpdate(user._id, {password:hashed});
+
+  res.status(200).send({
+    success:true,
+    message:"Password reset Successfully!"
+  })
+  
+} catch (error) {
+  console.log(error);
+  res.status(500).send({
+    success:false,
+    message:"Something went wrong",
+    error
+  })
+}
+
+}
+
 // test Controller
 const testController = async (req, res, next) => {
   res.send("protected route");
 };
 
-export { registerController, loginController, testController };
+export { registerController, loginController, testController, forgotPasswordController };

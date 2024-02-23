@@ -11,6 +11,7 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
+  const [answer, setAnswer] = useState("");
 
   const navigate = useNavigate();
 
@@ -26,6 +27,7 @@ const Register = () => {
         password,
         phone,
         address,
+        answer
       });
 
       if (res.data.success) {
@@ -44,8 +46,8 @@ const Register = () => {
     <>
       <Layout title={"Register - Sport Sphere App"}>
         <div className="register">
-          <h1>Register Form</h1>
           <form onSubmit={handleSubmit}>
+          <h1>Register Form</h1>
             <div className="mb-3">
               <input
                 type="text"
@@ -102,6 +104,19 @@ const Register = () => {
                 onChange={(e) => setAddress(e.target.value)}
               />
             </div>
+
+            <div className="mb-3">
+              <input
+                type="text"
+                className="form-control"
+                id="answer"
+                placeholder="What is your birth place"
+                required
+                value={answer}
+                onChange={(e) => setAnswer(e.target.value)}
+              />
+            </div>
+
 
             <button type="submit" className="btn btn-primary">
               Register
