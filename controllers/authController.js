@@ -68,6 +68,7 @@ const registerController = async (req, res, next) => {
       address,
       password: hashedPassword,
       answer,
+      
     });
 
     await user.save();
