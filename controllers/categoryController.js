@@ -1,6 +1,7 @@
 import categoryModel from "../models/categoryModel.js";
 import slugify from "slugify";
 
+// create category 
 const createCategoryController = async (req, res) => {
   try {
     const { name } = req.body;
@@ -40,4 +41,39 @@ const createCategoryController = async (req, res) => {
   }
 };
 
-export { createCategoryController };
+
+// update category 
+
+const updateCategoryController = async(req,res)=>{
+    try {
+        const { name } = req.body;
+        const {id} = req.params;
+
+    if (!name) {
+      return res.status(400).send({
+        success: false,
+        message: "Name is required",
+      });
+    }
+
+    const category = await categoryModel.findByIdAndUpdate(id,{name,slug:slugify(name)}, {new:true});
+
+    res.status(200).send({
+        success:true,
+        message:"category updated successully!",
+        category,
+    })
+        
+    } catch (error) {
+        console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Error in update category",
+      error: error.message, 
+    });
+        
+    }
+
+}
+
+export { createCategoryController,updateCategoryController };
