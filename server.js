@@ -4,6 +4,7 @@ import dotenv from 'dotenv'
 import cors from 'cors'
 
 import authRoute from './routes/authRoute.js'
+import categoryRoute from './routes/categoryRoute.js'
 
 
 // configure env 
@@ -32,6 +33,7 @@ app.use(morgan('dev'));
 //routes
 
 app.use("/api/v1/user",authRoute);
+app.use("/api/v1/category",categoryRoute);
 
 
 
