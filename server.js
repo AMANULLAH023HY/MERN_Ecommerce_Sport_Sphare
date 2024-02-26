@@ -5,6 +5,7 @@ import cors from 'cors'
 
 import authRoute from './routes/authRoute.js'
 import categoryRoute from './routes/categoryRoute.js'
+import productRoute from './routes/productRoute.js'
 
 
 // configure env 
@@ -34,6 +35,7 @@ app.use(morgan('dev'));
 
 app.use("/api/v1/user",authRoute);
 app.use("/api/v1/category",categoryRoute);
+app.use("/api/v1/product",productRoute);
 
 
 
