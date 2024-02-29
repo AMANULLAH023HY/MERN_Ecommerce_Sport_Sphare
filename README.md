@@ -1,5 +1,5 @@
 # Sports-Sphere-Ecommerce-with-MERN-tech-stack
 
-# npm run 
+# npm run dev 
 
 # made file for contributers/authors
