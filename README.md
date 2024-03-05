@@ -2,4 +2,4 @@
 
 # npm run dev 
 
-# made file for contributers/authors
+# made file for contributers/authors MD AMANULLAH & Reshedin
