@@ -1,36 +1,36 @@
-import express from 'express';
-import {forgotPasswordController, loginController, registerController, testController} from '../controllers/authController.js'
-import { isAdmin, requireSignIn } from '../middleware/authMiddleware.js';
 
-// router object 
+
+import express from "express";
+import {
+  registerController,
+  loginController,
+  testController,
+  forgotPasswordController,} from "../controllers/authController.js";
+import { requireSignIn, isAdmin } from "../middleware/authMiddleware.js";
+
+//router object
 const router = express.Router();
 
-// routing 
+//routing
+//REGISTER || METHOD POST
+router.post("/register", registerController);
 
-// REGITER || METHOD POST
+//LOGIN || POST
+router.post("/login", loginController);
 
-router.post('/register', registerController);
-// LOGIN || METHOD POST
-router.post('/login', loginController);
+//Forgot Password || POST
+router.post("/forgot-password", forgotPasswordController);
 
-// Forget Password || METHOD POST
-router.post('/forgot-password', forgotPasswordController)
+//test routes
+router.get("/test", requireSignIn, isAdmin, testController);
 
-// test route
-router.get("/test",requireSignIn,isAdmin,testController);
-
-// Protected User route  auth
-router.get('/user-auth', requireSignIn, (req,res)=>{
-    res.status(200).send({ok:true});
-})
-
-
-// Protected Admin route  auth
-router.get('/admin-auth', requireSignIn,isAdmin, (req,res)=>{
-    res.status(200).send({ok:true});
-})
-
-
-
+//protected User route auth
+router.get("/user-auth", requireSignIn, (req, res) => {
+  res.status(200).send({ ok: true });
+});
+//protected Admin route auth
+router.get("/admin-auth", requireSignIn, isAdmin, (req, res) => {
+  res.status(200).send({ ok: true });
+});
 
 export default router;
