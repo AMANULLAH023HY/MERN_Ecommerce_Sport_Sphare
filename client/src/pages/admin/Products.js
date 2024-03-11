@@ -35,7 +35,7 @@ const Products = () => {
 
         <div className="col-md-9">
           <h1 className="text-center">All Products List</h1>
-          <div className="d-flex">
+          <div className="d-flex flex-wrap">
             {products?.map((p) => (
               <Link
                 className="product-link"
