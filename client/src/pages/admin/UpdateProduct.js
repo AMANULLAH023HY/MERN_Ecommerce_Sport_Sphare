@@ -32,7 +32,7 @@ const UpdateProduct = () => {
       setDescription(data.product.description);
       setPrice(data.product.price);
       setQuantity(data.product.quantity);
-      setCategory(data.product.category);
+      setCategory(data.product.category._id);
       setShipping(data.product.shipping);
     } catch (error) {
       console.log(error);
@@ -76,7 +76,7 @@ const UpdateProduct = () => {
       photo && productData.append("phoyo", photo);
       productData.append("category", category);
 
-      const { data } = await axios.post(
+      const { data } = await axios.put(
         `http://localhost:8080/api/v1/product/update-product/${id}`,
         productData
       );
@@ -87,6 +87,22 @@ const UpdateProduct = () => {
         navigate("/dashboard/admin/products");
         toast.success("Product Updated successfully");
       }
+    } catch (error) {
+      console.log(error);
+      toast.error("something went wrong ");
+    }
+  };
+
+  // delete a product
+  const handleDelete = async () => {
+    try {
+      const answer = window.prompt("Are you Sure delete this product ?");
+      if (!answer) return;
+      const { data } = await axios.delete(
+        `http://localhost:8080/api/v1/product/delete-product/${id}`
+      );
+      toast.success("Product deleted successfully");
+      navigate("/dashboard/admin/products");
     } catch (error) {
       console.log(error);
       toast.error("something went wrong ");
@@ -112,7 +128,7 @@ const UpdateProduct = () => {
                 onChange={(value) => {
                   setCategory(value);
                 }}
-                // value={category.name}
+                value={category}
               >
                 {categories?.map((c) => (
                   <Option key={c._id} value={c._id}>
@@ -212,6 +228,12 @@ const UpdateProduct = () => {
               <div className="mb-3">
                 <button className="btn btn-primary" onClick={handleUpdate}>
                   UPDATE PRODUCT
+                </button>
+              </div>
+
+              <div className="mb-3">
+                <button className="btn btn-danger" onClick={handleDelete}>
+                  DELETE PRODUCT
                 </button>
               </div>
             </div>
