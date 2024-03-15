@@ -3,6 +3,7 @@ import { NavLink, Link } from "react-router-dom";
 import { MdOutlineSportsCricket } from "react-icons/md";
 import { useAuth } from "../../context/Auth";
 import toast from "react-hot-toast";
+import SearchInput from "../Form/SearchInput";
 
 export default function Header() {
   const [auth, setAuth] = useAuth();
@@ -37,6 +38,7 @@ export default function Header() {
               Sport<span>Sphare</span>
             </Link>
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+            <SearchInput/>
               <li className="nav-item">
                 <NavLink to="/" className="nav-link ">
                   Home
