@@ -8,7 +8,6 @@ import { Prices } from "../components/Prices";
 import { useNavigate } from "react-router-dom";
 
 export default function HomePage() {
-
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -85,10 +84,10 @@ export default function HomePage() {
     }
   };
 
-  useEffect(()=>{
-    if(page === 1) return;
+  useEffect(() => {
+    if (page === 1) return;
     loadMore();
-  },[page])
+  }, [page]);
 
   // filter by category
   const handleFilter = async (value, id) => {
@@ -178,7 +177,12 @@ export default function HomePage() {
                   <h5 className="card-title">{p.name}</h5>
                   <p className="card-text">{p.description.substring(0, 30)}</p>
                   <p className="card-text"> $ {p.price}</p>
-                  <button className="btn btn-primary ms-1" onClick={()=>navigate(`/product/${p.slug}`)}>More Details</button>
+                  <button
+                    className="btn btn-primary ms-1"
+                    onClick={() => navigate(`/product/${p.slug}`)}
+                  >
+                    More Details
+                  </button>
                   <button className="btn btn-secondary ms-1">
                     ADD TO CART
                   </button>
