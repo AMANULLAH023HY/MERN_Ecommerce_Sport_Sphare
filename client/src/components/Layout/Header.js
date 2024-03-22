@@ -5,8 +5,12 @@ import { useAuth } from "../../context/Auth";
 import toast from "react-hot-toast";
 import SearchInput from "../Form/SearchInput";
 import useCategory from "../hooks/useCategory";
+import { useCart } from "../../context/Cart";
+import { Badge } from "antd";
 
 export default function Header() {
+  const [cart, setCart] = useCart();
+  // const {cart} = useCart();
   const [auth, setAuth] = useAuth();
   const categories = useCategory();
 
@@ -59,7 +63,7 @@ export default function Header() {
                 <ul className="dropdown-menu">
                   <li>
                     <Link className="dropdown-item" to={"/categories"}>
-                     All Categories
+                      All Categories
                     </Link>
                   </li>
 
@@ -127,9 +131,11 @@ export default function Header() {
               )}
 
               <li className="nav-item">
-                <NavLink to="/cart" className="nav-link">
-                  Cart (0)
-                </NavLink>
+                <Badge count={cart?.length} showZero>
+                  <NavLink to="/cart" className="nav-link">
+                    Cart 
+                  </NavLink>
+                </Badge>
               </li>
             </ul>
           </div>
