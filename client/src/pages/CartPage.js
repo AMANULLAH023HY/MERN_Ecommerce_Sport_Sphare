@@ -81,7 +81,31 @@ const removeCartItem = (pid)=>{
             <hr/>
 
             <h4>Total : ₹ {totalPrice()} </h4>
+
+            {auth?.user?.address ? (
+              <>
+                <div className="mb-3">
+                  <h4>Current Address</h4>
+                  <h5>{auth?.user?.address}</h5>
+                  <button className="btn btn-outline-warning" onClick={()=>naviagte('/dashboard/user/profile')}>Update Address</button>
+                </div>
+              </>
+            ) : (
+              <div className="mb-3">
+                {
+                  auth?.token ? (
+<button className="btn btn-outline-warning" onClick={()=>naviagte('/dashboard/user/profile')}> Update Address</button>
+                  ) : (
+
+<button className="btn btn-outline-warning" onClick={()=>naviagte('/login', {state: '/cart',})}> Please login to checkout</button>
+
+                  )
+                }
+              </div>
+            )}
           </div>
+
+
         </div>
       </div>
     </Layout>
