@@ -2,6 +2,27 @@ import fs from "fs";
 import productModel from "../models/productModel.js";
 import categoryModel from "../models/categoryModel.js";
 import slugify from "slugify";
+import braintree from 'braintree'
+
+
+
+
+// payment gateway
+// var gateway = new braintree.BraintreeGateway({
+//   environment: braintree.Environment.Sandbox,
+//   merchantId: process.env.BRAINTREE_MERCHANT_ID,
+//   publicKey: process.env.BRAINTREE_PUBLIC_KEY, // Ensure this is correct
+//   privateKey: process.env.BRAINTREE_PRIVATE_KEY,
+// })
+
+
+var gateway = new braintree.BraintreeGateway({
+  environment: braintree.Environment.Sandbox,
+  merchantId: "9fwqn4z5scf3hdv9",
+  publicKey: "ny9tbdwhj3tjmmgj", // Ensure this is correct
+  privateKey: "d26551a2e55cddd267dc69ac0c9257dc",
+})
+
 const createProductController = async (req, res) => {
   try {
     const { name, slug, description, price, category, quantity, shipping } =
@@ -186,34 +207,6 @@ const updateProductController = async (req, res) => {
   }
 };
 
-// Product Filter controller
-
-// const productFilterController =async (req,res)=>{
-//   try {
-//     const [checked, radio] = req.body;
-// let args = {};
-
-//     if(checked.length >0) args.category = checked;
-//     if(radio.length) args.price = {$gte:radio[0],$lte:radio[1]};
-
-//     const products = await productModel.find(args);
-//     res.status(200).send({
-//       success:true,
-//       products,
-//     })
-
-//   } catch (error) {
-
-//     console.log(error);
-//     res.status(400).send({
-//       success: false,
-//       message: "Error in Filter product",
-//       error: error.message,
-//     });
-
-//   }
-
-// }
 
 const productFiltersController = async (req, res) => {
   try {
@@ -362,6 +355,76 @@ const productCategoryController =async (req,res)=>{
   }
 
 }
+// braintree payment gateway Controller
+// braintree Token
+const braintreeTokenController = async(req,res)=>{
+  try {
+
+    gateway.clientToken.generate({}, function(err,response){
+      if(err){
+        res.status(500).send(err);
+      }else{
+        res.status(200).send(response)
+      }
+    })
+    
+  } catch (error) {
+    console.log(error);
+    res.status(400).send({
+      success: false,
+      message: "Error in payment token",
+      error,
+    });
+  }
+};
+
+
+// braintree payment 
+const braintreePaymentController = async(req,res)=>{
+  try {
+    const {cart, nonce} = req.body;
+    let total = 0;
+    cart.map((i)=>{
+      total += i.price;
+    });
+
+    let newTransation = gateway.transaction.sale({
+      amount: total,
+      paymentMethodNonce:nonce,
+      options:{
+        submitForSettlement:true
+      }
+    },
+    function(error,result){
+      if(result){
+        const order = new orderModel({
+          products:cart,
+          payment:result,
+          buyer:req.user._id,
+        }).save();
+
+
+        res.json({ok:true});
+      }else{
+        res.status(500).send(error)
+      }
+    }
+    );
+
+
+
+    
+    
+    
+  } catch (error) {
+    console.log(error);
+    res.status(400).send({
+      success: false,
+      message: "Error in payments",
+      error,
+    });
+  }
+}
 export {
   createProductController,
   getProductContoller,
@@ -374,5 +437,7 @@ export {
   productListPageController,
   searchProductController,
   reletedProductController,
-  productCategoryController
+  productCategoryController,
+  braintreeTokenController,
+  braintreePaymentController
 };
