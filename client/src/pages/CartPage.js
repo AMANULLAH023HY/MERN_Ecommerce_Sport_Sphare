@@ -1,11 +1,11 @@
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import Layout from "../components/Layout/Layout";
 import { useAuth } from "../context/Auth";
 import { useCart } from "../context/Cart";
-// import DropIn from "braintree-web-drop-in-react";
-import DropIn from 'braintree-web-drop-in-react'
+import DropIn from "braintree-web-drop-in-react";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 const CartPage = () => {
   const [cart, setCart] = useCart();
@@ -59,7 +59,27 @@ const CartPage = () => {
   }, [auth?.token]);
 
   // handle Payment
-  const handlePayment = () => {};
+  const handlePayment = async() => {
+    try {
+      const {nonce} = await instance.requestPaymentMethod();
+      const {data} = await axios.post(
+        "http://localhost:8080/api/v1/product/braintree/payment",{
+          nonce,cart
+        }
+      );
+      setLoading(false);
+      localStorage.removeItem('cart');
+      setCart([]);
+      Navigate('/dashboard/user/orders');
+      toast.success("Payment completed successfully!");
+
+
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+
+    }
+  };
 
 
   return (
@@ -149,6 +169,8 @@ const CartPage = () => {
             )}
 
             <div className="mt-2">
+            {!clientToken || !cart?.length ? ("") :(
+              <>
               <DropIn
                 options={{
                   authorization: clientToken,
@@ -159,10 +181,18 @@ const CartPage = () => {
                 onInstance={(instance) => setInstance(instance)}
               />
 
-              <button className="btn btn-primary" onClick={handlePayment}>
-                Make Payment
+              <button className="btn btn-primary" onClick={handlePayment}
+              disabled={!loading || !instance || auth?.user?.address}>
+                {loading ? "Processing..." : "Make Payment"}
               </button>
+                
+              </>
+            )}
+              
             </div>
+
+
+            
           </div>
         </div>
       </div>
@@ -171,4 +201,3 @@ const CartPage = () => {
 };
 
 export default CartPage;
-
