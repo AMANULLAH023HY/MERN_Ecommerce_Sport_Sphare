@@ -7,6 +7,7 @@ import {
   deleteProductController,
   getProductContoller,
   getSingleProductContoller,
+  orderStatusController,
   productCategoryController,
   productCountController,
   productFiltersController,
@@ -77,5 +78,9 @@ router.get('/braintree/token', braintreeTokenController);
 
 // payments
 router.post('/braintree/payment', requireSignIn, braintreePaymentController);
+
+// order status update
+
+router.put('/order-status/:orderId', requireSignIn, isAdmin, orderStatusController)
 
 export default router;

@@ -3,6 +3,7 @@ import productModel from "../models/productModel.js";
 import categoryModel from "../models/categoryModel.js";
 import slugify from "slugify";
 import braintree from 'braintree'
+import orderModel from "../models/orderModel.js";
 
 
 
@@ -420,6 +421,32 @@ const braintreePaymentController = async(req,res)=>{
     });
   }
 }
+
+
+// order status update 
+
+const orderStatusController = async(req,res)=>{
+  try {
+
+    const {orderId} = req.params;
+    const {status} = req.body;
+    
+    const orders = await  orderModel.findByIdAndUpdate(orderId, {status}, {new:true});
+
+
+    res.json(orders);
+
+
+    
+  } catch (error) {
+    console.log(error);
+    res.status(400).send({
+      success: false,
+      message: "Error while updating order",
+      error,
+    });
+  }
+}
 export {
   createProductController,
   getProductContoller,
@@ -434,5 +461,6 @@ export {
   reletedProductController,
   productCategoryController,
   braintreeTokenController,
-  braintreePaymentController
+  braintreePaymentController,
+  orderStatusController
 };
